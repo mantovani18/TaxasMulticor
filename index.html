@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulador de Taxas — Multicor Tintas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">
+            <img id="brandLogo" src="logo.png" alt="Multicor Tintas logo" onerror="this.style.display='none'" />
+            <div class="logo-initials">MT</div>
+        </div>
+        <div>
+          <h1>Multicor Tintas</h1>
+          <p class="subtitle">Simulador de taxas da maquininha</p>
+        </div>
+      </div>
+   
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="card form-card">
+      <h2>Entradas</h2>
+
+      <div class="field">
+        <label for="amount">Valor da venda</label>
+        <div class="input-row">
+          <span class="prefix">R$</span>
+          <input id="amount" type="number" min="0" step="0.01" value="150.00">
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="field">
+          <label for="transactionType">Tipo de transação</label>
+          <select id="transactionType">
+            <option value="debit">Débito</option>
+            <option value="credit_one">Crédito à vista</option>
+            <option value="credit_installments">Crédito parcelado</option>
+          </select>
+        </div>
+
+        <div class="field" id="installmentsLabel">
+          <label for="installments">Parcelas</label>
+          <input id="installments" type="number" min="1" max="24" value="1">
+        </div>
+      </div>
+
+      <details open class="rates-panel">
+        <summary>Configurar taxas (padrões aplicados)</summary>
+        <div class="grid two small">
+          <label>
+            Débito (%):
+            <div class="rate-control">
+              <select id="rateDebit">
+                <option value="1.5">1.50%</option>
+                <option value="2.0">2.00%</option>
+                <option value="2.5" selected>2.50%</option>
+                <option value="3.0">3.00%</option>
+                <option value="custom">Personalizado</option>
+              </select>
+              <input id="rateDebitCustom" class="custom-rate" type="number" min="0" step="0.01" value="2.5" style="display:none;margin-top:8px" placeholder="Informe %">
+            </div>
+          </label>
+
+          <label>
+            Crédito à vista (%):
+            <div class="rate-control">
+              <select id="rateCreditOne">
+                <option value="2.0">2.00%</option>
+                <option value="3.0">3.00%</option>
+                <option value="3.5" selected>3.50%</option>
+                <option value="4.0">4.00%</option>
+                <option value="custom">Personalizado</option>
+              </select>
+              <input id="rateCreditOneCustom" class="custom-rate" type="number" min="0" step="0.01" value="3.5" style="display:none;margin-top:8px" placeholder="Informe %">
+            </div>
+          </label>
+
+          <label>
+            Parcelado - taxa base (%):
+            <div class="rate-control">
+              <select id="rateCreditBase">
+                <option value="3.5">3.50%</option>
+                <option value="4.0">4.00%</option>
+                <option value="4.5" selected>4.50%</option>
+                <option value="5.0">5.00%</option>
+                <option value="custom">Personalizado</option>
+              </select>
+              <input id="rateCreditBaseCustom" class="custom-rate" type="number" min="0" step="0.01" value="4.5" style="display:none;margin-top:8px" placeholder="Informe %">
+            </div>
+          </label>
+
+          <label>
+            Taxa adicional por parcela (%):
+            <div class="rate-control">
+              <select id="ratePerInstallment">
+                <option value="0.25">0.25%</option>
+                <option value="0.35">0.35%</option>
+                <option value="0.5" selected>0.50%</option>
+                <option value="0.75">0.75%</option>
+                <option value="custom">Personalizado</option>
+              </select>
+              <input id="ratePerInstallmentCustom" class="custom-rate" type="number" min="0" step="0.01" value="0.5" style="display:none;margin-top:8px" placeholder="Informe %">
+            </div>
+          </label>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button id="calculateBtn" class="btn-primary">Calcular</button>
+        <button id="resetBtn" class="btn-outline">Resetar</button>
+      </div>
+    </section>
+
+    <section class="card result-card">
+        <div class="result-header">
+          <h2>Simulação</h2>
+          <div class="result-actions">
+            <button id="backBtn" class="btn-outline" style="display:none">Editar</button>
+          </div>
+        </div>
+        <div id="summary" class="summary">
+          <!-- resumo dinâmico -->
+        </div>
+
+      <div id="tableWrapper" class="table-wrapper">
+        <!-- tabela de parcelas -->
+      </div>
+
+      <p class="note">As taxas padrão são apenas exemplos. Ajuste conforme o contrato da maquininha.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© Multicor Tintas — Simulador</small>
+  </footer>
+
+  <div id="backdrop" class="backdrop" style="display:none"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
